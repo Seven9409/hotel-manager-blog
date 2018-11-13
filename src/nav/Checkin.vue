@@ -8,6 +8,7 @@
                                 到店入住 —
                                 <span class="step-title"> Step 1 of 3 </span>
                 </span>
+
                 </bold>
             </div>
             <div class="actions">
