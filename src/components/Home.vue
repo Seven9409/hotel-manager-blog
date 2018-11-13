@@ -9,7 +9,7 @@
                 <div class="grid-content bg-purple menuBar">
                     <el-radio-group v-model="isCollapse">
                         <el-radio-button :label="false">展 开</el-radio-button>
-                        <el-radio-button :label="true">收 起</el-radio-button>
+                        <el-radio-button :label="true">收起</el-radio-button>
                     </el-radio-group>
                 </div>
             </el-col>
