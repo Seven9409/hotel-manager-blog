@@ -36,7 +36,9 @@
         <!--<el-container>-->
         <!--<el-aside width="241px">-->
         <el-col :span="24" class="main">
-            <aside>
+
+
+            <aside class="sidebar">
                 <!--:collapse="isCollapse?'sidebar-collapsed':'sidebar-enpended'"-->
                 <el-menu default-active="1-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
                          background-color="#eef1f6" :collapse="isCollapse">
@@ -207,8 +209,19 @@
     /*flex: 0 0 230px;*/
     /*width: 230px;*/
     /*}*/
+    .main {
+        display: flex;
+        /*position: absolute;*/
+        /*top: 50px;*/
+        /*bottom: 0;*/
+        /*overflow: hidden;*/
+    }
+    .main .sidebar{
+        position: relative;
+        height: 874px;
+    }
 
-    .el-menu {
+   .main aside .el-menu {
         height: 100%;
     }
 
@@ -226,12 +239,11 @@
     /*padding: 0;*/
     /*margin: 0;*/
     /*}*/
-    .main {
-        display: flex;
-    }
+
 
     .main .content-container {
         flex: 1;
+        /*position: absolute;*/
         overflow-y: scroll;
         padding: 0 20px;
     }

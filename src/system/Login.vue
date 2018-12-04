@@ -1,25 +1,25 @@
 <template>
     <el-form :model="loginForm" status-icon :rules="loginRules" ref="loginForm" label-width="50px"
-             label-position="left"
-             class="demo-ruleForm login-container">
-        <h3 class="title"> 用户登录 </h3>
-        <div class="avator">
-            <img src="../assets/avator.jpg" alt="用户头像" class="avator1">
-        </div>
-        <el-form-item label="账号" prop="account">
-            <el-input type="text" v-model="loginForm.account" autocomplete="off" placeholder="账号"></el-input>
-        </el-form-item>
-        <el-form-item label="密码" prop="password" class="password ">
-            <el-input type="password" v-model="loginForm.password" autocomplete="off" placeholder="密码"></el-input>
-        </el-form-item>
-        <el-checkbox v-model="checked" checked class="remember">记住密码</el-checkbox>
-        <el-form-item style="width: 100%">
-            <el-button type="primary" @click="submitForm('loginForm')" style="width: 100%">提交</el-button>
-            <!--<el-button @click="resetForm('loginForm')">重置</el-button>-->
-        </el-form-item>
-        <a class="goRegister"   @click="$router.push('/register')">还没有账号？马上注册</a>
-        <!--<a class="Manager" href="/managerLoginPage">管理员登录</a>-->
-    </el-form>
+                          label-position="left"
+                          class="demo-ruleForm login-container">
+    <h3 class="title"> 用户登录 </h3>
+    <div class="avator">
+        <img :src="loginForm.picture" alt="用户头像" class="avator1">
+    </div>
+    <el-form-item label="账号" prop="account">
+        <el-input type="text" v-model="loginForm.account" autocomplete="off" placeholder="账号"></el-input>
+    </el-form-item>
+    <el-form-item label="密码" prop="password" class="password ">
+        <el-input type="password" v-model="loginForm.password" autocomplete="off" placeholder="密码"></el-input>
+    </el-form-item>
+    <el-checkbox v-model="checked" checked class="remember">记住密码</el-checkbox>
+    <el-form-item style="width: 100%">
+        <el-button type="primary" @click="submitForm('loginForm')" style="width: 100%">提交</el-button>
+        <!--<el-button @click="resetForm('loginForm')">重置</el-button>-->
+    </el-form-item>
+    <a class="goRegister"   @click="$router.push('/register')">还没有账号？马上注册</a>
+    <!--<a class="Manager" href="/managerLoginPage">管理员登录</a>-->
+</el-form>
 
 </template>
 
@@ -32,31 +32,12 @@
     // import qs from 'qs'
     export default {
         data() {
-            /*  var checkAccount = (rule, value, callback) => {
-                  if (value === '') {
-                      callback(new Error('请输入账号'));
-                  }
-                  // else {
-                  //     if (this.loginForm.account !== '') {
-                  //         this.$refs.loginForm.validateField('checkPass');
-                  //     }
-                      callback();
-                  // }
-              };
-              var validatePass = (rule, value, callback) => {
-                  if (value === '') {
-                      callback(new Error('请输入密码'));
-                  } else {
-                      if (this.loginForm.checkPass !== '') {
-                          this.$refs.loginForm.validateField('checkPass');
-                      }
-                      callback();
-                  }
-              };*/
+
             return {
                 loginForm: {
                     account: '',
                     password: '',
+                    picture:'',
                 },
                 loginRules: {
                     account: [
@@ -130,7 +111,7 @@
     }
 
     .title {
-        margin: 0px auto 20px auto;
+        margin: 0 auto 20px auto;
         text-align: center;
         color: #505458;
         letter-spacing: 5px;

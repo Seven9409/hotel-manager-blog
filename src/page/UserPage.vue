@@ -30,9 +30,7 @@
                             @sort-change="sortChange"
                             :data="tableData"
                             border
-                            style="width: 100%"
-
-                    >
+                            style="width: 100%">
                         <el-table-column
                                 sortable="custom"
                                 align="center"
@@ -138,7 +136,7 @@
                                 <el-input v-model="editForm.name" auto-complete="off"></el-input>
                             </el-form-item>
                             <el-form-item label="性别">
-                                <el-radio-group v-model="editForm.sex">
+                                <el-radio-group v-model="editForm.gender">
                                     <el-radio class="radio" :label="'male'">男</el-radio>
                                     <el-radio class="radio" :label="'female'">女</el-radio>
                                 </el-radio-group>
@@ -326,7 +324,6 @@
             },
             //获取用户列表
             getUsers() {
-                // console.log(this.orderColumn, this.order)
                 let params = new URLSearchParams();
                 params.append('currentPage', this.currentPage - 1);
                 params.append('pageSize', this.pageSize);

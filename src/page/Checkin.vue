@@ -26,7 +26,12 @@
                     <el-step title="旅客登记"></el-step>
                     <el-step title="信息确认"></el-step>
                 </el-steps>
-                <el-form ref="form" :model="form" label-width="80px" id="tab1" :visible.sync="chooseRoomVisible">
+                <el-form
+                        ref="form"
+                         :model="form"
+                         label-width="80px"
+                         id="tab1"
+                         v-if="active === 0">
                     <h2>请选择房间</h2>
                     <el-form-item label="房间规格" required="true">
                         <el-select v-model="form.region" placeholder="请选择房间规格">
@@ -36,7 +41,12 @@
                     </el-form-item>
                 </el-form>
 
-                <el-form ref="form" :model="form" label-width="80px" id="tab2" :visible.sync="chooseUserVisible">
+                <el-form ref="form"
+                         :model="form"
+                         label-width="80px"
+                         id="tab2"
+                         labelPosition="left"
+                         v-else-if="active === 1">
                     <h2>请选择旅客</h2>
                     <el-form-item label="姓名">
                         <el-input v-model="form.name" placeholder="姓名"></el-input>
@@ -49,7 +59,12 @@
                     </el-form-item>
                 </el-form>
 
-                <el-form ref="form" :model="form" label-width="80px" id="tab3" :visible.sync="infoConfirmVisible">
+                <el-form
+                        ref="form"
+                        :model="form"
+                        label-width="80px"
+                        id="tab3"
+                        v-else-if="active === 2">
                     <h2>信息确认</h2>
                     <h4>客房规格</h4>
                     <el-form-item v-model="form.region">
@@ -57,7 +72,6 @@
                     <h4>旅客</h4>
                     <el-form-item v-model="form.name"></el-form-item>
                 </el-form>
-
             </div>
 
             <div class="form-actions">
@@ -74,8 +88,9 @@
         name: "Checkin",
         data() {
             return {
-                active: 0,
+                active:0,
                 form: {
+                    name:'',
                     region: '',
                     tel: '',
                     IDcard: '',
@@ -83,30 +98,13 @@
                 // rules:{
                 //     form:[{required:true}]
                 // },
-                chooseRoomVisible: true,
-                chooseUserVisible: false,
-                infoConfirmVisible: false,
+
             };
         },
 
         methods: {
             next: function () {
-                var vm = this;
                 if (this.active++ > 2) this.active = 0;
-                if (vm.active = 0) {
-                    this.chooseRoomVisible = true;
-                    this.chooseUserVisible = false;
-                    this.infoConfirmVisible = false;
-                }
-                else if (vm.active = 1) {
-                    this.chooseRoomVisible = false;
-                    this.chooseUserVisible = true;
-                    this.infoConfirmVisible = false;
-                } else {
-                    this.chooseRoomVisible = false;
-                    this.chooseUserVisible = false;
-                    this.infoConfirmVisible = true;
-                }
             }
         }
 
@@ -124,7 +122,7 @@
     .container {
         border: 1px solid rgb(231, 236, 241);
         padding: 12px 20px 15px;
-        margin-top: 0px;
+        margin-top: 0;
     }
 
     .portlet-title {
@@ -170,6 +168,7 @@
 
     .form-body {
         padding: 10px 0;
+
     }
 
     .el-form {
@@ -181,19 +180,18 @@
         padding: 10px 0;
         font-weight: 300;
     }
-
-    .el-form-item {
-        /*text-align: center;*/
+    .el-form-item{
+        margin-left: 35%;
+        /*margin-top: 20px;*/
+        padding-top: 20px;
     }
-
-    .el-form-item__label {
-        /*text-align: center !important;*/
-        /*margin-left: 120px;*/
-    }
-
-    .el-form-item__content {
-        /*width: 230px;*/
-    }
+    .el-input {
+    width: 35%;
+}
+h4{
+    margin-left: 35%;
+    width: 80px;
+}
 
     .form-actions {
         text-align: center;
