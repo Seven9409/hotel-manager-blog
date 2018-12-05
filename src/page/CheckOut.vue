@@ -19,39 +19,30 @@
                 <div class="table-body">
                     <!--表格-->
                     <el-table
-                            @sort-change="sortChange"
                             :data="tableData"
                             border
                             style="width: 100%">
                         <el-table-column
-                                sortable="custom"
                                 align="center"
                                 prop="id"
-                                label="编号"
-                                width="100">
+                                label="编号">
                         </el-table-column>
                         <el-table-column
-                                sortable="custom"
                                 align="center"
                                 prop="room"
-                                label="房间规格"
-                                width="150">
+                                label="房间规格">
                         </el-table-column>
                         <el-table-column
-                                sortable="custom"
                                 align="center"
                                 prop="roomNumber"
-                                label="房间号"
-                                width="150">
+                                label="房间号">
                         </el-table-column>
                         <el-table-column
-                                sortable="custom"
                                 align="center"
                                 prop="data"
                                 label="入住时间">
                         </el-table-column>
                         <el-table-column
-                                sortable="custom"
                                 align="center"
                                 prop="prices"
                                 label="价格">
@@ -59,8 +50,7 @@
                         <el-table-column
                                 align="center"
                                 prop="operation"
-                                label="操作"
-                                width="100">
+                                label="操作">
                             <template slot-scope="scope">
                                 <el-button size="small" @click="handleEdit(scope.$index, scope.row)" type="primary">退房
                                 </el-button>
@@ -119,5 +109,12 @@
         color: #666;
         letter-spacing: -1px;
         display: block;
+    }
+    .table-body{
+        overflow: hidden;
+    }
+   .el-pagination{
+  float: right;
+       margin-top: 20px;
     }
 </style>

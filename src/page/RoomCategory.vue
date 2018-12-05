@@ -121,6 +121,16 @@
                                 </template>
                             </el-table-column>
                         </el-table>
+                        <!--分页-->
+                        <el-pagination
+                                @size-change="handleSizeChange"
+                                @current-change="handleCurrentChange"
+                                :current-page="currentPage"
+                                :page-sizes="[5, 10, 15, 20]"
+                                :page-size="pageSize"
+                                layout="total, sizes, prev, pager, next, jumper"
+                                :total="totalPages">
+                        </el-pagination>
 
                         <!--编辑页面-->
                         <el-dialog title="编辑" :visible.sync="editFormVisible">
@@ -245,6 +255,12 @@
                     filters: {
                         name: '',
                     },
+                    currentPage: 1,// 当前页
+                    pageSize: 5, // 每页显示条目个数
+                    totalPages: 5,
+                    orderColumn: "id",
+                    //ascending, descending
+                    order: "ascending",
 
                     listLoading: false,
                     editFormVisible: false,//编辑界面是否显示
@@ -397,7 +413,7 @@
 
         .portlet-body {
             padding: 10px 20px 20px;
-            margin-bottom: 20px;
+            /*margin-bottom: 20px;*/
         }
 
         .table-toolbar {
@@ -405,10 +421,9 @@
             margin-top: 20px;
             padding-top: 10px;
         }
-
-        .table-body {
-            margin: 0 10px 20px;
+        .el-pagination {
+            margin-top: 20px;
+            text-align: right;
         }
-
 
     </style>
