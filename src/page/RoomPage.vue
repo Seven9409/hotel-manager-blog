@@ -19,7 +19,7 @@
                             <el-input v-model="filters.name" placeholder="名称"></el-input>
                         </el-form-item>
                         <el-form-item>
-                            <el-button type="primary" @click="onSubmit">查询<i class="el-icon-search el-icon--right"></i>
+                            <el-button type="primary" v-on:click="getUsers">查询<i class="el-icon-search el-icon--right"></i>
                             </el-button>
                         </el-form-item>
                         <el-form-item>
@@ -33,55 +33,52 @@
                 <div class="table-body">
                     <!--表格-->
                     <el-table
+                            @sort-change="sortChange"
                             :data="roomTable"
-                            height="300"
                             border
-                            style="width: 100%"
-                            v-loading="listLoading"
-                            :default-sort="{prop: 'id', order: 'ascending'}">
+                            style="width: 100%">
                         <el-table-column
-                                sortable
+                                sortable="custom"
                                 align="center"
                                 prop="id"
                                 label="序号"
                                 width="180">
                         </el-table-column>
                         <el-table-column
-                                sortable
+                                sortable="custom"
                                 align="center"
                                 prop="name"
                                 label="名称">
                         </el-table-column>
                         <el-table-column
-                                sortable
+                                sortable="custom"
                                 align="center"
                                 prop="position"
                                 label="位置"
                                 width="200">
                         </el-table-column>
                         <el-table-column
-                                sortable
+                                sortable="custom"
                                 align="center"
                                 prop="description"
                                 label="描述"
                                 width="200">
                         </el-table-column>
                         <el-table-column
-                                sortable
+                                sortable="custom"
                                 align="center"
                                 prop="specifications"
                                 label="规格"
                                 width="180">
                         </el-table-column>
                         <el-table-column
-                                sortable
+                                sortable="custom"
                                 width="180"
                                 align="center"
                                 prop="status"
                                 label="状态">
                         </el-table-column>
                         <el-table-column
-                                sortable
                                 align="center"
                                 prop="edit"
                                 label="编辑"
@@ -92,13 +89,12 @@
                             </template>
                         </el-table-column>
                         <el-table-column
-                                sortable
                                 align="center"
                                 prop="delete"
                                 label="删除"
                                 width="180">
                             <template slot-scope="scope">
-                                <el-button size="small" @click.native.prevent="deleteRow(scope.$index, tableData3)"
+                                <el-button size="small" @click.native.prevent="deleteRow(scope.$index, scope.row)"
                                            type="danger">删除
                                 </el-button>
                             </template>
@@ -137,10 +133,10 @@
                             </el-form-item>
                             <el-form-item label="状态">
                                 <el-select v-model="editForm.status" placeholder="状态">
-                                    <el-option label="启用" value="1"></el-option>
-                                    <el-option label="禁用" value="0"></el-option>
-                                    <el-option label="入住中" value="3"></el-option>
-                                    <el-option label="已预定" value="4"></el-option>
+                                    <el-option label="启用" value="0"></el-option>
+                                    <el-option label="禁用" value="1"></el-option>
+                                    <el-option label="入住中" value="2"></el-option>
+                                    <el-option label="已预定" value="3"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-form>
@@ -172,10 +168,10 @@
                             </el-form-item>
                             <el-form-item label="状态">
                                 <el-select v-model="addForm.status" placeholder="状态">
-                                    <el-option label="启用" value="1"></el-option>
-                                    <el-option label="禁用" value="0"></el-option>
-                                    <el-option label="入住中" value="3"></el-option>
-                                    <el-option label="已预定" value="4"></el-option>
+                                    <el-option label="启用" value="0"></el-option>
+                                    <el-option label="禁用" value="1"></el-option>
+                                    <el-option label="入住中" value="2"></el-option>
+                                    <el-option label="已预定" value="3"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-form>
@@ -193,6 +189,10 @@
 </template>
 
 <script>
+    import * as api from "../api/api"
+    import * as dataFormat from '../common/Moment';
+    import * as RestCode from "../common/RestCode"
+
     export default {
         name: "RoomPage",
         data() {
@@ -210,7 +210,6 @@
                 //ascending, descending
                 order: "ascending",
 
-                listLoading: false,
                 editFormVisible: false,//编辑界面是否显示
                 editFormRules: {
                     name: [
@@ -224,7 +223,7 @@
                     position: '',
                     description: '',
                     specifications: '',
-                    status: -1,
+                    status:0,
                 },
                 addFormVisible: false,//新增界面是否显示
                 addFormRules: {
@@ -239,7 +238,7 @@
                     position: '',
                     description: '',
                     specifications: '',
-                    status: -1,
+                    status: 0,
                 },
             }
         },
