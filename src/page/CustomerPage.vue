@@ -4,7 +4,7 @@
             <div class="portlet-title">
                 <div class="caption">
                     <i class="el-icon-setting font-red"></i>
-                    <span class="blod font-red">房间规格表</span>
+                    <span class="blod font-red">住户信息管理</span>
                 </div>
             </div>
             <div class="portlet-body">
@@ -14,7 +14,7 @@
                             <el-input v-model="filters.name" placeholder="名称"></el-input>
                         </el-form-item>
                         <el-form-item>
-                            <el-button type="primary" @click="onSubmit">查询<i
+                            <el-button type="primary" v-on:click="getUsers">查询<i
                                     class="el-icon-search el-icon--right"></i>
                             </el-button>
                         </el-form-item>
@@ -28,49 +28,45 @@
                 <div class="table-body">
                     <!--表格-->
                     <el-table
+                            @sort-change="sortChange"
                             :data="roomCategoryTable"
-                            height="300"
                             border
-                            style="width: 100%"
-                            v-loading="listLoading"
-                            :default-sort="{prop: 'id', order: 'ascending'}">
+                            style="width: 100%">
                         <el-table-column
-                                sortable
+                                sortable="custom"
                                 align="center"
                                 prop="id"
                                 label="序号"
                                 width="180">
                         </el-table-column>
                         <el-table-column
-                                sortable
+                                sortable="custom"
                                 align="center"
                                 prop="name"
                                 label="名称"
                                 width="200">
                         </el-table-column>
                         <el-table-column
-                                sortable
+                                sortable="custom"
                                 align="center"
                                 prop="phoneNumber"
                                 label="电话"
                                 width="240">
                         </el-table-column>
                         <el-table-column
-                                sortable
+                                sortable="custom"
                                 align="center"
                                 prop="idcard"
                                 label="身份证号">
                         </el-table-column>
                         <el-table-column
-                                sortable
+                                sortable="custom"
                                 align="center"
                                 prop="address"
                                 label="地址"
                                 width="190">
                         </el-table-column>
-
                         <el-table-column
-                                sortable
                                 align="center"
                                 prop="edit"
                                 label="编辑"
@@ -82,13 +78,12 @@
                             </template>
                         </el-table-column>
                         <el-table-column
-                                sortable
                                 align="center"
                                 prop="delete"
                                 label="删除"
                                 width="200">
                             <template slot-scope="scope">
-                                <el-button size="small" @click.native.prevent="deleteRow(scope.$index, tableData3)"
+                                <el-button size="small" @click.native.prevent="deleteRow(scope.$index, scope.row)"
                                            type="danger">删除
                                 </el-button>
                             </template>
@@ -158,6 +153,10 @@
 </template>
 
 <script>
+    import * as api from "../api/api"
+    import * as dataFormat from '../common/Moment';
+    import * as RestCode from "../common/RestCode"
+
     export default {
         name: "CustomerPage",
         data() {
@@ -175,7 +174,6 @@
                 //ascending, descending
                 order: "ascending",
 
-                listLoading: false,
                 editFormVisible: false,//编辑界面是否显示
                 editLoading: false,
                 editFormRules: {
@@ -192,7 +190,6 @@
                     address: '',
                 },
                 addFormVisible: false,//新增界面是否显示
-                addLoading: false,
                 addFormRules: {
                     name: [
                         {required: true, message: '请输入姓名', trigger: 'blur'}
@@ -209,10 +206,6 @@
             }
         },
         methods: {
-            //性别显示转换
-            formatSex: function (row) {
-                return row.sex == 1 ? '男' : row.sex == 0 ? '女' : '未知';
-            },
             // toolbar
             // 查询
             onSubmit() {

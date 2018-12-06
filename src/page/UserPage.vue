@@ -245,7 +245,6 @@
                 order: "ascending",
 
                 editFormVisible: false,//编辑界面是否显示
-                editLoading: false,
                 editFormRules: {
                     name: [
                         {required: true, message: '请输入姓名', trigger: 'blur'}
@@ -266,7 +265,6 @@
                     description: '',
                 },
                 addFormVisible: false,//新增界面是否显示
-                addLoading: false,
                 addFormRules: {
                     name: [
                         {required: true, message: '请输入姓名', trigger: 'blur'}
