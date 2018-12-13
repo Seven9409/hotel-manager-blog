@@ -135,10 +135,10 @@
                             </el-form-item>
                             <el-form-item label="状态">
                                 <el-select v-model="editForm.state" placeholder="状态">
-                                    <el-option label="启用" value="0"></el-option>
-                                    <el-option label="禁用" value="1"></el-option>
-                                    <el-option label="入住中" value="2"></el-option>
-                                    <el-option label="已预定" value="3"></el-option>
+                                    <el-option label="启用" value="enable"></el-option>
+                                    <el-option label="禁用" value="disable"></el-option>
+                                    <el-option label="入住中" value="checkin"></el-option>
+                                    <el-option label="已预定" value="booking"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-form>
@@ -172,8 +172,8 @@
                                 <el-select v-model="addForm.state" placeholder="状态">
                                     <el-option label="启用" value="enable"></el-option>
                                     <el-option label="禁用" value="disable"></el-option>
-                                    <el-option label="入住中" value="2"></el-option>
-                                    <el-option label="已预定" value="3"></el-option>
+                                    <el-option label="入住中" value="checkin"></el-option>
+                                    <el-option label="已预定" value="booking"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-form>
@@ -182,8 +182,6 @@
                             <el-button type="primary" @click="addSubmit">确 定</el-button>
                         </div>
                     </el-dialog>
-
-
                 </div>
             </div>
         </div>
@@ -224,7 +222,7 @@
                     position: '',
                     description: '',
                     cid: '',
-                    state:0,
+                    state:'enable',
                 },
                 addFormVisible: false,//新增界面是否显示
                 addFormRules: {
@@ -239,7 +237,7 @@
                     position: '',
                     description: '',
                     cid: 0,
-                    state: 0,
+                    state: 'enable',
                 },
             }
         },
@@ -277,9 +275,9 @@
                        return   '启用'
                     case 'disable':
                         return  '禁用'
-                    case 2:
+                    case 'checkin':
                         return '入住中'
-                    case 3:
+                    case 'booking':
                         return  '已预定'
                     default:
                         return  '未知'
@@ -329,6 +327,7 @@
                 this.$refs.addForm.validate((valid) => {
                     if (valid) {
                         api.addRoom(this.addForm).then((res) => {
+                            // console.log(res.data)
                             // console.log(this.addForm)
                             let code = res.code;
                             // let msg = res.msg;
@@ -337,7 +336,7 @@
                                 this.addForm = {};
                             }
                             else if (code === RestCode.RECORD_ALREADY_EXISTS) {
-                                this.$message.warning('用户已存在！');
+                                this.$message.warning('目标已存在！');
                             }
                             else {
                                 this.$message.error('添加失败！');
@@ -357,8 +356,8 @@
                 this.$confirm('确认删除该记录吗?', '提示', {
                     type: 'warning'
                 }).then(() => {
-                    api.removeRoom(row.userId).then((res) => {
-                        // console.log(res)
+                    api.removeRoom(row.roomId).then((res) => {
+                        // console.log(row.roomId)
                         let code = res.data.code;
                         // console.log(code)
                         if (code === RestCode.SUCCESS) {
@@ -391,7 +390,7 @@
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             let para = Object.assign({}, this.editForm);
                             api.editRoom(para).then((res) => {
-                                // console.log(res)
+                                console.log(para)
                                 let code = res.code;
                                 // console.log(code)
                                 if (code === RestCode.SUCCESS) {
@@ -415,7 +414,6 @@
                     }
                 });
             },
-
         },
         mounted: function () {
             this.getRoomTable();
