@@ -62,6 +62,7 @@
                             <el-table-column
                                     sortable="custom"
                                     align="center"
+                                    :formatter="formatAir"
                                     prop="airconditioner"
                                     label="空调"
                                     width="140">
@@ -69,6 +70,7 @@
                             <el-table-column
                                     sortable="custom"
                                     align="center"
+                                    :formatter="formatTv"
                                     prop="TV"
                                     label="电视"
                                     width="140">
@@ -76,6 +78,7 @@
                             <el-table-column
                                     sortable="custom"
                                     align="center"
+                                    :formatter="formatPc"
                                     prop="PC"
                                     label="电脑"
                                     width="140">
@@ -83,6 +86,7 @@
                             <el-table-column
                                     sortable="custom"
                                     align="center"
+                                    :formatter="formatWifi"
                                     prop="wifi"
                                     label="wifi"
                                     width="140">
@@ -90,6 +94,7 @@
                             <el-table-column
                                     sortable="custom"
                                     align="center"
+                                    :formatter="formatImg"
                                     prop="img"
                                     label="图片"
                                     width="140">
@@ -295,9 +300,25 @@
                 }
             },
             methods: {
-                //性别显示转换
-                formatSex: function (row) {
-                    return row.sex == 1 ? '男' : row.sex == 0 ? '女' : '未知';
+                //空调显示转换
+                formatAir: function (row) {
+                    return row.airconditioner == 1 ? '有' : row.airconditioner == 0 ? '无' : '未知';
+                },
+                //电视显示转换
+                formatTv: function (row) {
+                    return row.TV == 1 ? '有' : row.TV == 0 ? '无' : '未知';
+                },
+                //电脑显示转换
+                formatPc: function (row) {
+                    return row.PC == 1 ? '有' : row.PC == 0 ? '无' : '未知';
+                },
+                //wifi显示转换
+                formatWifi: function (row) {
+                    return row.wifi == 1 ? '有' : row.wifi == 0 ? '无' : '未知';
+                },
+                //图片显示转换
+                formatImg: function (row) {
+                    return row.img == 1 ? '有' : row.img == 0 ? '无' : '未知';
                 },
                 // toolbar
                 // 查询
