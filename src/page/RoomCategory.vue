@@ -28,76 +28,73 @@
                     <div class="table-body">
                         <!--表格-->
                         <el-table
+                                @sort-change="sortChange"
                                 :data="roomCategoryTable"
-                                height="300"
                                 border
-                                style="width: 100%"
-                                v-loading="listLoading"
-                                :default-sort="{prop: 'id', order: 'ascending'}">
+                                style="width: 100%">
                             <el-table-column
-                                    sortable
+                                    sortable="custom"
                                     align="center"
                                     prop="id"
                                     label="序号"
                                     width="140">
                             </el-table-column>
                             <el-table-column
-                                    sortable
+                                    sortable="custom"
                                     align="center"
                                     prop="name"
                                     label="名称">
                             </el-table-column>
                             <el-table-column
-                                    sortable
+                                    sortable="custom"
                                     align="center"
                                     prop="number"
                                     label="床位数"
                                     width="140">
                             </el-table-column>
                             <el-table-column
-                                    sortable
+                                    sortable="custom"
                                     align="center"
                                     prop="prices"
                                     label="价格"
                                     width="140">
                             </el-table-column>
                             <el-table-column
-                                    sortable
+                                    sortable="custom"
                                     align="center"
                                     prop="airconditioner"
                                     label="空调"
                                     width="140">
                             </el-table-column>
                             <el-table-column
-                                    sortable
+                                    sortable="custom"
                                     align="center"
                                     prop="TV"
                                     label="电视"
                                     width="140">
                             </el-table-column>
                             <el-table-column
-                                    sortable
+                                    sortable="custom"
                                     align="center"
                                     prop="PC"
                                     label="电脑"
                                     width="140">
                             </el-table-column>
                             <el-table-column
-                                    sortable
+                                    sortable="custom"
                                     align="center"
                                     prop="wifi"
                                     label="wifi"
                                     width="140">
                             </el-table-column>
                             <el-table-column
-                                    sortable
+                                    sortable="custom"
                                     align="center"
                                     prop="img"
                                     label="图片"
                                     width="140">
                             </el-table-column>
                             <el-table-column
-                                    sortable
                                     align="center"
                                     prop="edit"
                                     label="编辑"
@@ -109,7 +106,6 @@
                                 </template>
                             </el-table-column>
                             <el-table-column
-                                    sortable
                                     align="center"
                                     prop="delete"
                                     label="删除"
@@ -180,14 +176,14 @@
                             </el-form>
                             <div slot="footer" class="dialog-footer">
                                 <el-button @click="editFormVisible = false">取 消</el-button>
-                                <el-button type="primary" @click.native="editSubmit" :loading="editLoading">确 定
+                                <el-button type="primary" @click.native="editSubmit" >确 定
                                 </el-button>
                             </div>
                         </el-dialog>
 
                         <!--新增页面-->
-                        <el-dialog title="编辑" :visible.sync="addFormVisible">
-                            <el-form :model="addForm" label-width="80px" :rules="editFormRules" ref="editForm">
+                        <el-dialog title="新增" :visible.sync="addFormVisible">
+                            <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
                                 <el-form-item label="名称" prop="name">
                                     <el-input v-model="addForm.name" auto-complete="off"></el-input>
                                 </el-form-item>
@@ -233,11 +229,9 @@
                             </el-form>
                             <div slot="footer" class="dialog-footer">
                                 <el-button @click="addFormVisible = false">取 消</el-button>
-                                <el-button type="primary" @click="addSubmit" :loading="addLoading">确 定</el-button>
+                                <el-button type="primary" @click="addSubmit" >确 定</el-button>
                             </div>
                         </el-dialog>
-
-
                     </div>
                 </div>
             </div>
@@ -262,12 +256,10 @@
                     //ascending, descending
                     order: "ascending",
 
-                    listLoading: false,
                     editFormVisible: false,//编辑界面是否显示
-                    editLoading: false,
                     editFormRules: {
                         name: [
-                            {required: true, message: '请输入姓名', trigger: 'blur'}
+                            {required: true, message: '请输入房间名', trigger: 'blur'}
                         ]
                     },
                     //编辑界面数据
@@ -283,10 +275,9 @@
                         img: '',
                     },
                     addFormVisible: false,//新增界面是否显示
-                    addLoading: false,
                     addFormRules: {
                         name: [
-                            {required: true, message: '请输入姓名', trigger: 'blur'}
+                            {required: true, message: '请输入房间名', trigger: 'blur'}
                         ]
                     },
                     // 新增页面数据
