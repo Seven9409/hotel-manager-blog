@@ -35,8 +35,8 @@ export const addRoom = params => {
     return axios.post(`${hotelBase}/room`, params).then(res => res.data);
 };
 export const removeRoom = pathValue => {
-    return axios.delete(`${hotelBase}/room/{roomId}` + pathValue);
+    return axios.delete(`${hotelBase}/room/` + pathValue);
 };
-export const editRoom = params => {
-    return axios.put(`${hotelBase}/room/{roomId}`, params).then(res => res.data);
+export const editRoom = (roomId,params) => {
+    return axios.put(`${hotelBase}/room/`+roomId, params).then(res => res.data);
 };

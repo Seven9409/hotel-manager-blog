@@ -389,8 +389,8 @@
                     if (valid) {
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             let para = Object.assign({}, this.editForm);
-                            api.editRoom(para).then((res) => {
-                                console.log(para)
+                            api.editRoom(para.roomId,para).then((res) => {
+                                console.log(para.roomId)
                                 let code = res.code;
                                 // console.log(code)
                                 if (code === RestCode.SUCCESS) {
