@@ -17,7 +17,7 @@ Vue.config.productionTip = false;
 const router = new VueRouter({
     routes
 });
-router.push("/home/reserve");
+router.push("/home/checkin");
 //
 // router.beforeEach((to, from, next) => {
 //     //NProgress.start();
